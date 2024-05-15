@@ -37,6 +37,13 @@ android {
 
 dependencies {
 
+
+    implementation("com.google.android.gms:play-services-maps:18.1.0") //Peticion de los recursos de servico de google maps
+    implementation("com.squareup.retrofit2:retrofit:2.9.0") //Implementa los recursos http que se solicitan
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0") //Implementa la conversion de Json a Gson
+
+    
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
