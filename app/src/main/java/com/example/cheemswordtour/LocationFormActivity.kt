@@ -22,6 +22,7 @@ class LocationFormActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_location_form)
 
+        val txtPlace = findViewById<EditText>(R.id.lugar_text)
         val txtResposible = findViewById<EditText>(R.id.responsable_text)
         val txtMotive = findViewById<EditText>(R.id.motivo_text)
         val btnSave = findViewById<Button>(R.id.button_guardar)
@@ -35,6 +36,7 @@ class LocationFormActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener {
             val registro = Registro()
+            registro.lugar = txtPlace.text.toString()
             registro.responsable = txtResposible.text.toString()
             registro.motivo = txtMotive.text.toString()
             registro.latitud = latitude

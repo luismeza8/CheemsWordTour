@@ -20,11 +20,13 @@ class LocationInfoActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_location_info)
 
+        val txtLugar = findViewById<TextView>(R.id.lugar_text)
         val txtResponsable = findViewById<TextView>(R.id.responsable_text)
         val txtMotivo = findViewById<TextView>(R.id.motivo_text)
         val txtLongitud = findViewById<TextView>(R.id.longitud)
         val txtLatitud = findViewById<TextView>(R.id.latitud)
         val btnClose = findViewById<Button>(R.id.cerrar)
+
         btnClose.setOnClickListener {
             finish()
         }
@@ -34,7 +36,8 @@ class LocationInfoActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Registro> {
             override fun onResponse(call: Call<Registro>, response: Response<Registro>) {
                 val registro = response.body()
-                txtResponsable.text = registro!!.responsable
+                txtLugar.text = registro!!.lugar
+                txtResponsable.text = registro.responsable
                 txtMotivo.text = registro.motivo
                 txtLatitud.text = registro.latitud.toString()
                 txtLongitud.text = registro.longitud.toString()
