@@ -34,30 +34,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        var mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        val call : Call<Registro> = RetrofitUtil.getApi()!!.getLocation(1)
-        call.enqueue(object : Callback<Registro>{
-            override fun onResponse(
-                call: Call<Registro>,
-                response: Response<Registro>
-            ) {
-            try {
-                Log.e("bien", "yeap")
-                val registro : Registro? = response.body()
-                Toast.makeText(context, "${registro?.responsable}", Toast.LENGTH_SHORT).show()
-            }catch (e: Exception){
-                Log.e("error", e.message.toString())
-            }
-
-        }
-
-            override fun onFailure(call: Call<Registro>, t: Throwable) {
-                Log.e("error llamando a la api", t.message.toString())
-            }
-
-        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -65,19 +43,24 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             map = googleMap
             map?.mapType = GoogleMap.MAP_TYPE_HYBRID
 
-            map?.clear()
-            val latLong = LatLng(27.9681409, -110.9189332)
-            map?.addMarker(MarkerOptions().position(latLong).draggable(true))
-            map?.moveCamera(CameraUpdateFactory.newLatLng(latLong))
-            map?.animateCamera(CameraUpdateFactory.zoomTo(12f))
-            map?.setOnMarkerDragListener(object: GoogleMap.OnMarkerDragListener {
-                override fun onMarkerDrag(marker: Marker) {}
-                override fun onMarkerDragEnd(marker: Marker) {
-                    val latLng = marker.position
-                    Toast.makeText(context, "${latLng.latitude}", Toast.LENGTH_SHORT).show()
+            val call : Call<List<Registro>> = RetrofitUtil.getApi()!!.getLocations()
+            call.enqueue(object  : Callback<List<Registro>> {
+                override fun onResponse(
+                    call: Call<List<Registro>>,
+                    response: Response<List<Registro>>
+                ) {
+                 val registros = response.body()
+                    for (registro in registros!!) {
+                        val latLng = LatLng(registro.latitud!!, registro.longitud!!)
+                        map?.addMarker(MarkerOptions().position(latLng).draggable(false))
+                    }
                 }
-                override fun onMarkerDragStart(marker: Marker) {}
+                override fun onFailure(call: Call<List<Registro>>, t: Throwable) {
+                    Log.e("Error llamada api", t.message.toString())
+                }
             })
+
+            map?.clear()
         }catch (ex: Exception){
             Log.e("Error loading map", ex.message.toString())
         }
