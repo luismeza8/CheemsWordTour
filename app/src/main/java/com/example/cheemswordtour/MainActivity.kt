@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                  val registros = response.body()
                     for (registro in registros!!) {
                         val latLng = LatLng(registro.latitud!!, registro.longitud!!)
-                        val marker = map?.addMarker(MarkerOptions().position(latLng).draggable(false))
+                        val marker = map?.addMarker(MarkerOptions().position(latLng).draggable(false).icon(BitmapDescriptorFactory.fromResource(R.drawable.cheems_marker_chikito)))
                         marker?.tag = registro.id
                     }
                     map?.setOnMarkerClickListener { marker ->
