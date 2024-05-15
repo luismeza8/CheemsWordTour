@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,27 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val btn_create = findViewById<Button>(R.id.add_button)
+        btn_create.setOnClickListener {
+            map?.addMarker(MarkerOptions().position(LatLng(27.0, -110.0)).draggable(true))
+            map?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(27.0, -110.0)))
+            map?.animateCamera(CameraUpdateFactory.zoomTo(12f))
+
+            map?.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener{
+                override fun onMarkerDrag(p0: Marker) { }
+
+                override fun onMarkerDragEnd(marker: Marker) {
+                    val position = marker.position
+                    val intent = Intent(context, LocationFormActivity::class.java)
+                    intent.putExtra("latitud", position.latitude)
+                    intent.putExtra("longitud", position.longitude)
+                    startActivityForResult(intent, 1)
+                }
+                override fun onMarkerDragStart(p0: Marker) { }
+            })
+        }
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
@@ -75,5 +97,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.e("Error loading map", ex.message.toString())
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                recreate()
+            }
+        }
     }
 }
