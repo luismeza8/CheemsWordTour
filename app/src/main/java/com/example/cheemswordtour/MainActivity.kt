@@ -1,6 +1,7 @@
 package com.example.cheemswordtour
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.example.cheemswordtour.entities.Registro
 import com.example.cheemswordtour.utilerias.RetrofitUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -52,7 +54,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                  val registros = response.body()
                     for (registro in registros!!) {
                         val latLng = LatLng(registro.latitud!!, registro.longitud!!)
-                        map?.addMarker(MarkerOptions().position(latLng).draggable(false))
+                        val marker = map?.addMarker(MarkerOptions().position(latLng).draggable(false))
+                        marker?.tag = registro.id
+                    }
+                    map?.setOnMarkerClickListener { marker ->
+                        val registroId = marker.tag as? Int
+                        val intent = Intent(context, LocationInfoActivity::class.java)
+                        intent.putExtra("registro_id", registroId)
+                        startActivity(intent)
+                        false
                     }
                 }
                 override fun onFailure(call: Call<List<Registro>>, t: Throwable) {
