@@ -2,6 +2,8 @@ package com.example.cheemswordtour
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -77,7 +79,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                  val registros = response.body()
                     for (registro in registros!!) {
                         val latLng = LatLng(registro.latitud!!, registro.longitud!!)
-                        val marker = map?.addMarker(MarkerOptions().position(latLng).draggable(false).icon(BitmapDescriptorFactory.fromResource(R.drawable.cheems_marker_chikito)))
+                        val originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.cheems_marker_chikito)
+                        val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 100, 100, false) // Adjust the size as needed
+
+
+                        val marker = map?.addMarker(MarkerOptions().position(latLng).draggable(false).icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)))
                         marker?.tag = registro.id
                     }
                     map?.setOnMarkerClickListener { marker ->

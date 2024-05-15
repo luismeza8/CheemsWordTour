@@ -10,7 +10,7 @@ object RetrofitUtil {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder()
             // CAMBIAR URL!!!!
-            .baseUrl("http://192.168.0.37:8000/api/")
+            .baseUrl("http://10.232.12.138:8000/api/")
             .addConverterFactory(GsonConverterFactory.create((gson)))
             .build()
         return retrofit.create(CheemsWorldTourApi::class.java)
