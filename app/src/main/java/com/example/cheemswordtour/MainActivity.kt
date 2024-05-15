@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.cheemswordtour.entities.Registro
+import com.example.cheemswordtour.utilerias.RetrofitUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,6 +17,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     var context : Context = this
@@ -32,6 +37,27 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         var mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        val call : Call<Registro> = RetrofitUtil.getApi()!!.getLocation(1)
+        call.enqueue(object : Callback<Registro>{
+            override fun onResponse(
+                call: Call<Registro>,
+                response: Response<Registro>
+            ) {
+            try {
+                Log.e("bien", "yeap")
+                val registro : Registro? = response.body()
+                Toast.makeText(context, "${registro?.responsable}", Toast.LENGTH_SHORT).show()
+            }catch (e: Exception){
+                Log.e("error", e.message.toString())
+            }
+
+        }
+
+            override fun onFailure(call: Call<Registro>, t: Throwable) {
+                Log.e("error llamando a la api", t.message.toString())
+            }
+
+        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
