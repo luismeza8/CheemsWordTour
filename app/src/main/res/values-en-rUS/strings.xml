@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cheems around the world</string>
+    <string name="responsable_txt">Responsible</string>
+    <string name="motivo_txt">Motive</string>
+    <string name="guardar_txt">Save</string>
+    <string name="cancelar_txt">Cancel</string>
+    <string name="cerrar_txt">Close</string>
+    <string name="longitud_txt">Longitude</string>
+    <string name="latitud_txt">Latitude</string>
+</resources>

@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">CheemsWordTour</string>
+    <string name="app_name">Cheems alrededor del mundo</string>
+    <string name="responsable_txt">Responsable</string>
+    <string name="motivo_txt">Motivo</string>
+    <string name="guardar_txt">Guardar</string>
+    <string name="cancelar_txt">Cancelar</string>
+    <string name="cerrar_txt">Cerrar</string>
+    <string name="longitud_txt">Longitud</string>
+    <string name="latitud_txt">Latitud</string>
 </resources>
