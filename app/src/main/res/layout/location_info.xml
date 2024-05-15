@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Responsable"
+        android:text="@string/responsable_txt"
         android:textSize="25dp"
         android:textStyle="bold"
         android:textAlignment="center"/>
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Motivo"
+        android:text="@string/motivo_txt"
         android:textSize="25dp"
         android:textStyle="bold"
         android:textAlignment="center"/>
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Latitud"
+        android:text="@string/latitud_txt"
         android:textSize="25dp"
         android:textStyle="bold"
         android:textAlignment="center"/>
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Longitud"
+        android:text="@string/longitud_txt"
         android:textSize="25dp"
         android:textStyle="bold"
         android:textAlignment="center"/>
@@ -76,7 +76,7 @@
         android:id="@+id/cerrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cerrar"
+        android:text="@string/cerrar_txt"
         android:textSize="20dp"/>
 
 </LinearLayout>
